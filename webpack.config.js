@@ -1,4 +1,4 @@
-const jSBotManager	= require('./src/JSBotManager.js');
+const JSSlaveManager	= require('./src/JSSlaveManager.js');
 const npm			= require('npm');
 const restify		= require('restify');
 
@@ -20,7 +20,7 @@ npm.load(null, () => {
 		} else {
 			for (const dependency in module.dependencies) {
 				if (dependency.startsWith('jsbot-')) {
-					jSBotManager.addJSBot(dependency);
+					JSSlaveManager.addJSBot(dependency);
 				}
 			}
 

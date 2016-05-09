@@ -1,5 +1,5 @@
 const Controller		= require('./Controller.js');
-const jsBotManager		= require('../../JSBotManager.js');
+const jsSlaveManager	= require('../../JSSlaveManager.js');
 const UserParameters	= require('../../UserParameters.js');
 const restify			= require('restify');
 
@@ -35,8 +35,8 @@ class Add extends Controller {
 			return res.json(new restify.BadRequestError('Invalid action'));
 		}
 
-		const eventPointer = jsBotManager.getEvent(params.event.categoryId, params.event.id);
-		const actionPointer = jsBotManager.getAction(params.action.categoryId, params.action.id);
+		const eventPointer = jsSlaveManager.getEvent(params.event.categoryId, params.event.id);
+		const actionPointer = jsSlaveManager.getAction(params.action.categoryId, params.action.id);
 
 		if (!eventPointer) {
 			return res.json(new restify.BadRequestError('Event not found'));
@@ -49,7 +49,7 @@ class Add extends Controller {
 			const userParametersAction = new UserParameters(params.action.params);
 
 			eventPointer.start(actionPointer, userParametersEvent, userParametersAction);
-			jsBotManager.addRunnedBot(eventPointer, actionPointer, userParametersEvent, userParametersAction);
+			jsSlaveManager.addRunnedSlave(eventPointer, actionPointer, userParametersEvent, userParametersAction);
 
 			res.json({});
 		} catch(e) {

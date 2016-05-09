@@ -1,6 +1,6 @@
-const Controller	= require('./Controller.js');
-const jsBotManager	= require('../../JSBotManager.js');
-const restify		= require('restify');
+const Controller		= require('./Controller.js');
+const jsSlaveManager	= require('../../JSSlaveManager.js');
+const restify			= require('restify');
 
 /**
  * Define /remove.
@@ -26,7 +26,7 @@ class Remove extends Controller {
 			id: parseInt(req.params.id)
 		};
 
-		jsBotManager.stopRunnedBots(params.id).then(() => {
+		jsSlaveManager.stopRunnedSlave(params.id).then(() => {
 			res.json({});
 		}).catch((error) => {
 			console.log(error);

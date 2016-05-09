@@ -1,23 +1,23 @@
 /**
- * JSBotManager manage every available bots.
- * Also, the class store runned bots.
+ * JSSlaveManager manage every available slaves.
+ * Also, the class store runned slaves.
  */
-class JSBotManager {
+class JSSlaveManager {
 	/**
-	 * Create a new JSBotManager.
+	 * Create a new JSSlaveManager.
 	 */
 	constructor() {
-		this.jsbots = [];
-		this.jsbotsRunned = [];
+		this.jsSlaves = [];
+		this.jsSlavesRunned = [];
 	}
 
 	/**
-	 * Add a JSBot to the manager by require it.
-	 * @param {String} name - The name of the JSBot module.
+	 * Add a JSSlave to the manager by require it.
+	 * @param {String} name - The name of the JSSlave module.
 	 */
-	addJSBot(name) {
-		const JSBot = require(name);
-		this.jsbots.push(new JSBot());
+	addJSSlave(name) {
+		const JSSlave = require(name);
+		this.jsSlaves.push(new JSSlave());
 	}
 
 	/**
@@ -27,9 +27,9 @@ class JSBotManager {
 	 * @return {ActionPointer} - An instance of ActionPointer or null no action has been found.
 	 */
 	getAction(categoryId, actionId) {
-		for (let i = 0; i < this.jsbots.length; ++i) {
+		for (let i = 0; i < this.jsSlaves.length; ++i) {
 			if (i === categoryId) {
-				const actions = this.jsbots[i].getActions();
+				const actions = this.jsSlaves[i].getActions();
 				for (let j = 0; j < actions.length; ++j) {
 					if (j === actionId) {
 						return actions[j];
@@ -46,12 +46,12 @@ class JSBotManager {
 	 */
 	getActions() {
 		const result = [];
-		for (let i = 0; i < this.jsbots.length; ++i) {
-			const actions = this.jsbots[i].getActions();
+		for (let i = 0; i < this.jsSlaves.length; ++i) {
+			const actions = this.jsSlaves[i].getActions();
 			if (actions.length > 0) {
 				const category = {
 					id: i,
-					categoryName: this.jsbots[i].getCategoryName(),
+					categoryName: this.jsSlaves[i].getCategoryName(),
 					actions: []
 				};
 
@@ -77,9 +77,9 @@ class JSBotManager {
 	 * @return {EventPointer} - An instance of EventPointer or null no event has been found.
 	 */
 	getEvent(categoryId, eventId) {
-		for (let i = 0; i < this.jsbots.length; ++i) {
+		for (let i = 0; i < this.jsSlaves.length; ++i) {
 			if (i === categoryId) {
-				const events = this.jsbots[i].getEvents();
+				const events = this.jsSlaves[i].getEvents();
 				for (let j = 0; j < events.length; ++j) {
 					if (j === eventId) {
 						return events[j];
@@ -96,12 +96,12 @@ class JSBotManager {
 	 */
 	getEvents() {
 		const result = [];
-		for (let i = 0; i < this.jsbots.length; ++i) {
-			const events = this.jsbots[i].getEvents();
+		for (let i = 0; i < this.jsSlaves.length; ++i) {
+			const events = this.jsSlaves[i].getEvents();
 			if (events.length > 0) {
 				const category = {
 					id: i,
-					categoryName: this.jsbots[i].getCategoryName(),
+					categoryName: this.jsSlaves[i].getCategoryName(),
 					events: []
 				};
 
@@ -122,14 +122,14 @@ class JSBotManager {
 	}
 
 	/**
-	 * Add a new Bot.
+	 * Add a new Slave.
 	 * @param {EventPointer} event - The instance of the EventPointer.
 	 * @param {ActionPointer} action - The instance of the ActionPointer.
 	 * @param {UserParameters} eventParameters - The parameters that the user choose to send to the event.
 	 * @param {UserParameters} actionParameters - The parameters that the user choose to send to the action.
 	 */
-	addRunnedBot(event, action, eventParameters, actionParameters) {
-		this.jsbotsRunned.push({
+	addRunnedSlave(event, action, eventParameters, actionParameters) {
+		this.jsSlavesRunned.push({
 			event:				event,
 			action:				action,
 			eventParameters: 	eventParameters,
@@ -138,23 +138,23 @@ class JSBotManager {
 	}
 
 	/**
-	 * Return every ??THING??.
+	 * Return every runned slaves.
 	 * @returns {Array} - An array of Object which contains the id and informations about the event and the action.
 	 */
-	getRunnedBots() {
+	getRunnedSlaves() {
 		const result = [];
-		for (let i = 0; i < this.jsbotsRunned.length; ++i) {
+		for (let i = 0; i < this.jsSlavesRunned.length; ++i) {
 			result.push({
 				id: i,
 				event: {
-					name: this.jsbotsRunned[i].event.getName(),
-					description: this.jsbotsRunned[i].event.getDescription(),
-					params: this.jsbotsRunned[i].eventParameters.toJSON()
+					name: this.jsSlavesRunned[i].event.getName(),
+					description: this.jsSlavesRunned[i].event.getDescription(),
+					params: this.jsSlavesRunned[i].eventParameters.toJSON()
 				},
 				action: {
-					name: this.jsbotsRunned[i].action.getName(),
-					description: this.jsbotsRunned[i].action.getDescription(),
-					params: this.jsbotsRunned[i].actionParameters.toJSON()
+					name: this.jsSlavesRunned[i].action.getName(),
+					description: this.jsSlavesRunned[i].action.getDescription(),
+					params: this.jsSlavesRunned[i].actionParameters.toJSON()
 				}
 			});
 		}
@@ -162,16 +162,16 @@ class JSBotManager {
 	}
 
 	/**
-	 * Stop a running bot.
-	 * @param {Number} id - The id of the bot.
+	 * Stop a running slave.
+	 * @param {Number} id - The id of the slave.
 	 * @return {Promise} A Promise.
 	 */
-	stopRunnedBots(id) {
+	stopRunnedSlave(id) {
 		return new Promise((resolve, reject) => {
 			let i = 0;
-			for (const botsRunned of this.jsbotsRunned) {
+			for (const slaveRunned of this.jsSlavesRunned) {
 				if (id === i) {
-					return botsRunned.event.stop(botsRunned.eventParameters).then(() => {
+					return slaveRunned.event.stop(slaveRunned.eventParameters).then(() => {
 						resolve();
 					}).catch((error) => {
 						reject(error);
@@ -179,9 +179,9 @@ class JSBotManager {
 				}
 				++i;
 			}
-			reject({message: 'Bot not found'});
+			reject({message: 'Slave not found'});
 		});
 	}
 }
 
-module.exports = new JSBotManager();
+module.exports = new JSSlaveManager();

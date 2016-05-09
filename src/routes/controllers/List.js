@@ -1,5 +1,5 @@
-const Controller	= require('./Controller.js');
-const jsBotManager	= require('../../JSBotManager.js');
+const Controller		= require('./Controller.js');
+const jsSlaveManager	= require('../../JSSlaveManager.js');
 
 /**
  * Define /list.
@@ -21,7 +21,7 @@ class List extends Controller {
 	 * @param {Object} res - The response parameter.
 	 */
 	get(req, res) {
-		res.json(jsBotManager.getRunnedBots());
+		res.json(jsSlaveManager.getRunnedSlaves());
 	}
 }
 

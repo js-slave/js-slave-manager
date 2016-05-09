@@ -1,10 +1,10 @@
-const jSBotManager	= require('./src/JSBotManager.js');
-const npm			= require('npm');
-const restify		= require('restify');
+const jsSlaveManager	= require('./src/JSSlaveManager.js');
+const npm				= require('npm');
+const restify			= require('restify');
 
 const port		= 8080;
 const server	= restify.createServer({
-	name: 'JSBot-manager'
+	name: 'js-slave-manager'
 });
 
 server.use(restify.queryParser());
@@ -12,15 +12,15 @@ server.use(restify.bodyParser());
 
 require('./src/routes/index.js')(server);
 
-console.log('Loading JSBots...');
+console.log('Loading slaves...');
 npm.load(null, () => {
 	npm.commands.ls(null, true, (err, module) => {
 		if (err) {
 			console.log(err);
 		} else {
 			for (const dependency in module.dependencies) {
-				if (dependency.startsWith('jsbot-')) {
-					jSBotManager.addJSBot(dependency);
+				if (dependency.startsWith('js-slave-')) {
+					jsSlaveManager.addJSSlave(dependency);
 				}
 			}
 

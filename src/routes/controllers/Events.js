@@ -1,5 +1,5 @@
-const Controller	= require('./Controller.js');
-const jsBotManager	= require('../../JSBotManager.js');
+const Controller		= require('./Controller.js');
+const jsSlaveManager	= require('../../JSSlaveManager.js');
 
 /**
  * Define /events.
@@ -21,7 +21,7 @@ class Events extends Controller {
 	 * @param {Object} res - The response parameter.
 	 */
 	get(req, res) {
-		res.json(jsBotManager.getEvents());
+		res.json(jsSlaveManager.getEvents());
 	}
 }
 
