@@ -1,6 +1,7 @@
 # js-slave-manager
 
 [![dependency status](https://david-dm.org/js-slave/js-slave-manager.svg)](https://david-dm.org/js-slave/js-slave-manager)
+[![dev-dependencies status](https://david-dm.org/js-slave/js-slave-manager/dev-status.svg)](https://david-dm.org/js-slave/js-slave-manager#info=devDependencies)
 
 This application can manage and run different slaves.
 A slave contains "events" and "actions". With a web interface, you will be able to choose what action will be executed when an event is triggered.
