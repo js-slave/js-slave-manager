@@ -14,15 +14,16 @@ All of the project is written in JavaScript ES6. For the back-end (API and Manag
 
 ### Installation
 
-    git clone https://github.com/js-slave/js-slave-manager.git
-    cd js-slave-manager
-    npm start
+	git clone https://github.com/js-slave/js-slave-manager.git
+	cd js-slave-manager
+	npm install
+	npm start
 
 ### Slave
 
 Each slave has to be installed with npm.
 
-    npm install js-slave-NAME
+	npm install js-slave-NAME
 
 ### Contributing
 
