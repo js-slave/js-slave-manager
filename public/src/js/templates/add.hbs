@@ -1,0 +1,27 @@
+<div class="">
+	<h1 class="center-txt">Add - Confirmation</h1>
+
+	<div class="event">
+		<h2>{{this.event.name}}</h2>
+		<p>
+			{{this.event.description}}
+			<br><br>
+			<h3>Parameters</h3>
+			{{#each this.event.params}}
+				<strong>{{name}}</strong> => {{value}}
+			{{/each}}
+		</p>
+	</div>
+	<div id="arrow" class="center-div"></div>
+	<div class="action">
+		<h2>{{this.action.name}}</h2>
+		<p>
+			{{this.action.description}}
+		</p>
+	</div>
+	<form id="add-form" class="center-txt pure-form">
+		<fieldset>
+			<button type="submit" class="pure-button pure-button-primary button-success">Validate</button>
+		</fieldset>
+	</form>
+</div>

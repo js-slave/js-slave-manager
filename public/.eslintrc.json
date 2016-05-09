@@ -1,0 +1,14 @@
+{
+	"env": {
+		"commonjs": true
+	},
+	"parserOptions": {
+		"sourceType": "module"
+	},
+	"globals": {
+		"$": true
+	},
+	"rules": {
+		"no-console": 2
+	}
+}

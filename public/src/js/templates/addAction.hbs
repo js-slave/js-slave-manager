@@ -1,0 +1,52 @@
+<div class="">
+	<h1 class="center-txt">Add - Action</h1>
+
+	{{#each this.actions}}
+		<h2>{{categoryName}}</h2>
+
+		{{#each actions}}
+		<ul class="actions">
+			<li class="action">
+				<p>
+					<h3>{{name}}</h3>
+					{{description}}
+					<br><br>
+					<form class="action-form pure-form">
+						<fieldset>
+							<input type="hidden" name="categoryId" value="{{../id}}">
+							<input type="hidden" name="actionId" value="{{id}}">
+
+							{{#each params}}
+								{{description}}:
+								<br>
+								<label for="{{name}}-{{../id}}">{{name}}</label>
+
+								{{#if value}}
+									<select id="{{name}}-{{../id}}" name="{{name}}" class="pure-input" required>
+										{{#each value}}
+											<option value="{{this}}">{{this}}</option>
+										{{/each}}
+									</select>
+								{{else}}
+									<select id="{{name}}-{{../id}}" name="{{name}}" class="pure-input" required>
+										{{#each ../../../this.returnedValues}}
+											<option value="{{name}}">{{name}}</option>
+										{{/each}}
+										<option value="custom">custom</option>
+									</select>
+								{{/if}}
+
+								<br><br>
+							{{/each}}
+							<br>
+							<button type="submit" class="pure-button pure-button-primary">Choose</button>
+						</fieldset>
+					</form>
+				</p>
+			</li>
+		</ul>
+		{{/each}}
+	{{/each}}
+
+
+</div>
