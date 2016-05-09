@@ -1,32 +1,44 @@
-const JSSlaveManager	= require('./src/JSSlaveManager.js');
-const npm			= require('npm');
-const restify		= require('restify');
+const webpack = require('webpack');
 
-const port		= 8080;
-const server	= restify.createServer({
-	name: 'JSBot-manager'
-});
-
-server.use(restify.queryParser());
-server.use(restify.bodyParser());
-
-require('./src/routes/index.js')(server);
-
-console.log('Loading JSBots...');
-npm.load(null, () => {
-	npm.commands.ls(null, true, (err, module) => {
-		if (err) {
-			console.log(err);
-		} else {
-			for (const dependency in module.dependencies) {
-				if (dependency.startsWith('jsbot-')) {
-					JSSlaveManager.addJSBot(dependency);
-				}
+module.exports = {
+	entry: './public/src/main.js',
+	output: {
+		path:		'./public/out',
+		filename: 	'js-slave-manager-client.min.js'
+	},
+	module: {
+		loaders: [
+			{
+				test: 	/\.png$/,
+				loader: 'url-loader?limit=8192'
+			},
+			{
+				test: 	/\.hbs$/,
+				loader: 'handlebars-loader'
+			},
+			{
+				test: 	/\.css$/,
+				loader: 'style-loader!css-loader'
+			},
+			{
+				test   : /\.(ttf|eot|svg|woff|woff2)(\?[a-z0-9]+)?$/,
+				loader : 'file-loader'
+			},
+			{
+				test: 	/\.js$/,
+				loader: 'babel-loader',
+				query: {
+					presets: ['es2015']
+				},
+				exclude: /(node_modules)/
 			}
-
-			server.listen(port, () => {
-				console.log(`${server.name} listening at http://127.0.0.1:${port}`);
-			});
-		}
-	});
-});
+		]
+	},
+	plugins: [
+		new webpack.ProvidePlugin({
+			$: 'jquery',
+			jQuery: 'jquery',
+			'window.jQuery': 'jquery'
+		})
+	]
+};
