@@ -17,7 +17,8 @@ class AddView extends Backbone.View {
 	constructor() {
 		super({
 			events: {
-				'submit #add-form': 'submit'
+				'submit #add-form': 'submit',
+				'click #button-back': 'back'
 			}
 		});
 		this.action = new ActionModel(store.get('action'));
@@ -39,6 +40,13 @@ class AddView extends Backbone.View {
 		}).error((error) => {
 			console.log(error);
 		});
+	}
+
+	/**
+	 * Remove the action from the local storage before redirecting the user to the addAction page.
+	 */
+	back() {
+		store.remove('action');
 	}
 
 	/**

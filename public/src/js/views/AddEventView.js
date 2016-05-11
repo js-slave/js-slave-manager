@@ -16,7 +16,8 @@ class AddEventView extends Backbone.View {
 	constructor() {
 		super({
 			events: {
-				'submit .event-form': 'submit'
+				'submit .event-form': 'submit',
+				'click #button-back': 'back'
 			}
 		});
 		this.events = new EventsCollection();
@@ -62,6 +63,13 @@ class AddEventView extends Backbone.View {
 		}
 		store.set('event', eventModel);
 		Backbone.history.navigate('addAction', true);
+	}
+
+	/**
+	 * Remove the event from the local storage before redirecting the user to the home page.
+	 */
+	back() {
+		store.remove('event');
 	}
 
 	/**

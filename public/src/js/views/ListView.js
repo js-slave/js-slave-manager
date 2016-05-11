@@ -15,7 +15,6 @@ class ListView extends Backbone.View {
 		super({});
 		this.botsRunnedCollection = new BotsRunnedCollection();
 		this.botsRunnedCollection.fetch().then(() => {
-			console.log(this.botsRunnedCollection);
 			this.render();
 		});
 	}

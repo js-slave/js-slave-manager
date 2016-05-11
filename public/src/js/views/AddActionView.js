@@ -18,7 +18,8 @@ class AddActionView extends Backbone.View {
 		super({
 			events: {
 				'change select': 'clickOnSelect',
-				'submit .action-form': 'submit'
+				'submit .action-form': 'submit',
+				'click #button-back': 'back'
 			}
 		});
 
@@ -105,6 +106,13 @@ class AddActionView extends Backbone.View {
 
 		store.set('action', actionModel);
 		Backbone.history.navigate('add', true);
+	}
+
+	/**
+	 * Remove the action from the local storage before redirecting the user to the addEvent page.
+	 */
+	back() {
+		store.remove('action');
 	}
 
 	/**
