@@ -167,20 +167,17 @@ class JSSlaveManager {
 	 * @return {Promise} A Promise.
 	 */
 	stopRunnedSlave(id) {
-		return new Promise((resolve, reject) => {
-			let i = 0;
-			for (const slaveRunned of this.jsSlavesRunned) {
-				if (id === i) {
-					return slaveRunned.event.stop(slaveRunned.eventParameters).then(() => {
-						resolve();
-					}).catch((error) => {
-						reject(error);
-					});
-				}
-				++i;
+		let i = 0;
+		for (const slaveRunned of this.jsSlavesRunned) {
+			if (id === i) {
+				return slaveRunned.event.stop(slaveRunned.eventParameters).then(() => {
+					this.jsSlavesRunned.splice(i, 1);
+					return Promise.resolve();
+				});
 			}
-			reject({message: 'Slave not found'});
-		});
+			++i;
+		}
+		return Promise.reject({message: 'Slave not found'});
 	}
 }
 
