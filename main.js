@@ -1,5 +1,7 @@
+const availableSlaves	= require('./src/AvailableSlaves.js');
 const jsSlaveManager	= require('./src/JSSlaveManager.js');
 const npm				= require('npm');
+
 const restify			= require('restify');
 
 const port		= 8080;
@@ -19,7 +21,8 @@ npm.load(null, () => {
 			console.log(err);
 		} else {
 			for (const dependency in module.dependencies) {
-				if (dependency.startsWith('js-slave-')) {
+				if (availableSlaves.isValidSlave(dependency)) {
+					availableSlaves.setSlaveVersion(dependency, module.dependencies[dependency].version);
 					jsSlaveManager.addJSSlave(dependency);
 				}
 			}
