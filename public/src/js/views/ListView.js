@@ -1,20 +1,20 @@
-import Backbone				from 'backbone';
-import ListTemplate			from '../templates/list.hbs';
-import BotsRunnedCollection	from '../collections/BotsRunnedCollection.js';
+import Backbone					from 'backbone';
+import ListTemplate				from '../templates/list.hbs';
+import SlavesRunnedCollection	from '../collections/SlavesRunnedCollection.js';
 
 /**
  * Represent the page "List".
- * In this page, the user can see every created bots.
+ * In this page, the user can see every created slaves.
  */
 class ListView extends Backbone.View {
 	/**
 	 * Create an instance of ListView.
-	 * Call the API to get created bots.
+	 * Call the API to get created slaves.
 	 */
 	constructor() {
 		super({});
-		this.botsRunnedCollection = new BotsRunnedCollection();
-		this.botsRunnedCollection.fetch().then(() => {
+		this.slavesRunnedCollection = new SlavesRunnedCollection();
+		this.slavesRunnedCollection.fetch().then(() => {
 			this.render();
 		});
 	}
@@ -23,7 +23,7 @@ class ListView extends Backbone.View {
 	 * Called when the page need to be rendered.
 	 */
 	render() {
-		this.$el.html(ListTemplate(this.botsRunnedCollection.toJSON()));
+		this.$el.html(ListTemplate(this.slavesRunnedCollection.toJSON()));
 	}
 }
 
