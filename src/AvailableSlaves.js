@@ -1,5 +1,6 @@
-const RegClient	= require('npm-registry-client');
-const slaves	= require('./../slaves.json');
+const nodeVersionCompare	= require('node-version-compare');
+const RegClient				= require('npm-registry-client');
+const slaves				= require('./../slaves.json');
 
 /**
  * AvailableSlaves manage informations about available slaves inside "slaves.json"
@@ -76,6 +77,11 @@ class AvailableSlaves {
 		for (const slave of this.slaves) {
 			promises.push(this.getLatestVersion(slave.name).then((version) => {
 				slave.latestVersion = version;
+				if (nodeVersionCompare(slave.version, slave.latestVersion) === -1) {
+					slave.newVersion = true;
+				} else {
+					slave.newVersion = false;
+				}
 				return Promise.resolve();
 			}).catch((error) => {
 				console.log(error);
@@ -88,7 +94,7 @@ class AvailableSlaves {
 
 	/**
 	 * Return an array with every loaded slave.
-	 * @return {Array} An array of slave (name, version, latestVersion and installed).
+	 * @return {Array} An array of slave (name, version, latestVersion, installed and newVersion).
 	 */
 	getSlaves() {
 		return this.slaves;
