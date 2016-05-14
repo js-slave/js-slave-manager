@@ -1,0 +1,33 @@
+<div>
+	<h1 class="center-txt">Manage slaves</h1>
+	<br>
+	{{#each this}}
+		<div class="center-div center-txt">
+			<h2>{{name}}</h2>
+			<p>
+				Current version: {{version}}
+				<br><br>
+
+				{{#if installed}}
+					{{#if newVersion}}
+						<button class="pure-button pure-button-primary button-success">Upgrade to {{latestVersion}}</button>
+					{{/if}}
+					<button class="pure-button pure-button-primary button-error">Uninstall</button>
+				{{else}}
+					<button class="pure-button pure-button-primary button-success">Install</button>
+				{{/if}}
+				<br><br>
+			</p>
+		</div>
+	{{else}}
+		<p class="center-txt">
+			<br>
+			No slave found...<br>
+			Please verify that there are slaves inside the file "slaves.json".
+		</p>
+	{{/each}}
+
+	<div class="center-txt div-button-back">
+		<a href="#/" class="button-xlarge pure-button pure-button-primary">Back</a>
+	</div>
+</div>

@@ -4,6 +4,7 @@ import AddActionView	from './js/views/AddActionView.js';
 import AddEventView		from './js/views/AddEventView.js';
 import HomeView 		from './js/views/HomeView.js';
 import ListView 		from './js/views/ListView.js';
+import ManageSlavesView	from './js/views/ManageSlavesView.js';
 
 /**
  * Define the router of the website.
@@ -16,10 +17,11 @@ class Router extends Backbone.Router {
 		const options = {
 			routes: {
 				'': 'home',
-				'addEvent': 'addEvent',
-				'addAction': 'addAction',
-				'add': 'add',
-				'list': 'list'
+				'addEvent':		'addEvent',
+				'addAction':	'addAction',
+				'add': 			'add',
+				'list': 		'list',
+				'manageSlaves':	'manageSlaves'
 			}
 		};
 		super(options);
@@ -58,6 +60,13 @@ class Router extends Backbone.Router {
 	 */
 	list() {
 		this._appendView(new ListView());
+	}
+
+	/**
+	 * Associate "ManageSlavesView" to the route "manageSlaves".
+	 */
+	manageSlaves() {
+		this._appendView(new ManageSlavesView());
 	}
 
 	/**
