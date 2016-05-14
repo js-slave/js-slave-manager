@@ -14,7 +14,8 @@ class AvailableSlaves {
 
 		for (const slave of slaves) {
 			this.slaves.push({
-				name: slave
+				name:		slave,
+				installed:	false
 			});
 		}
 	}
@@ -42,6 +43,7 @@ class AvailableSlaves {
 		for (const slave of this.slaves) {
 			if (slave.name === slaveName) {
 				slave.version = version;
+				slave.installed = true;
 			}
 		}
 	}
@@ -82,6 +84,14 @@ class AvailableSlaves {
 			}));
 		}
 		return Promise.all(promises);
+	}
+
+	/**
+	 * Return an array with every loaded slave.
+	 * @return {Array} An array of slave (name, version, latestVersion and installed).
+	 */
+	getSlaves() {
+		return this.slaves;
 	}
 }
 
