@@ -38,6 +38,11 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: 150%;
 }
 
+.button-error {
+	background: rgb(202, 60, 60);
+	font-size: 150%;
+}
+
 .button-xlarge {
 	font-size: 125%;
 }
