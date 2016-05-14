@@ -27,8 +27,12 @@ npm.load(null, () => {
 				}
 			}
 
-			server.listen(port, () => {
-				console.log(`${server.name} listening at http://127.0.0.1:${port}`);
+			availableSlaves.getAllLatestVersion().then(() => {
+				server.listen(port, () => {
+					console.log(`${server.name} listening at http://127.0.0.1:${port}`);
+				});
+			}).catch((error) => {
+				console.log(error);
 			});
 		}
 	});

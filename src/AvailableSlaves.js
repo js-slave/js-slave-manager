@@ -42,12 +42,6 @@ class AvailableSlaves {
 		for (const slave of this.slaves) {
 			if (slave.name === slaveName) {
 				slave.version = version;
-				this.getLatestVersion(slaveName).then((version) => {
-					slave.latestVersion = version;
-				}).catch((error) => {
-					console.log(error);
-					slave.latestVersion = null;
-				});
 			}
 		}
 	}
@@ -69,6 +63,25 @@ class AvailableSlaves {
 				reject(error);
 			});
 		});
+	}
+
+	/**
+	 * Get all latest version of every loaded slaves.
+	 * @return {Promise} A Promise.
+	 */
+	getAllLatestVersion() {
+		const promises = [];
+		for (const slave of this.slaves) {
+			promises.push(this.getLatestVersion(slave.name).then((version) => {
+				slave.latestVersion = version;
+				return Promise.resolve();
+			}).catch((error) => {
+				console.log(error);
+				slave.latestVersion = null;
+				return Promise.reject();
+			}));
+		}
+		return Promise.all(promises);
 	}
 }
 
