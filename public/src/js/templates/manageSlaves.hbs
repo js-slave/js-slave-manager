@@ -5,8 +5,10 @@
 		<div class="center-div center-txt">
 			<h2>{{name}}</h2>
 			<p>
-				Current version: {{version}}
-				<br><br>
+				{{#if version}}
+					Current version: {{version}}
+					<br><br>
+				{{/if}}
 
 				{{#if installed}}
 					{{#if newVersion}}
