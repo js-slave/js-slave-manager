@@ -1,4 +1,6 @@
+const jsSlaveManager		= require('./JSSlaveManager.js');
 const nodeVersionCompare	= require('node-version-compare');
+const npm					= require('npm');
 const RegClient				= require('npm-registry-client');
 const slaves				= require('./../slaves.json');
 
@@ -77,10 +79,8 @@ class AvailableSlaves {
 		for (const slave of this.slaves) {
 			promises.push(this.getLatestVersion(slave.name).then((version) => {
 				slave.latestVersion = version;
-				if (nodeVersionCompare(slave.version, slave.latestVersion) === -1) {
-					slave.newVersion = true;
-				} else {
-					slave.newVersion = false;
+				if (slave.installed) {
+					slave.newVersion = nodeVersionCompare(slave.version, slave.latestVersion) === -1;
 				}
 				return Promise.resolve();
 			}).catch((error) => {
@@ -98,6 +98,60 @@ class AvailableSlaves {
 	 */
 	getSlaves() {
 		return this.slaves;
+	}
+
+	/**
+	 * Install a slave.
+	 * @param {String} name - The name of the slave.
+	 * @return {Promise} - A Promise.
+	 */
+	install(name) {
+		return new Promise((resolve, reject) => {
+			for (const slave of this.slaves) {
+				if (slave.name === name) {
+					npm.load(null, () => {
+						npm.commands.install([name], (err) => {
+							if (err) {
+								return reject(err);
+							}
+							slave.version = slave.latestVersion;
+							slave.installed = true;
+							jsSlaveManager.addJSSlave(name);
+							resolve();
+						});
+					});
+					return;
+				}
+			}
+			reject(`${name} is not a valid slave`);
+		});
+	}
+
+	/**
+	 * Uninstall a slave.
+	 * @param {String} name - The name of the slave.
+	 * @return {Promise} A Promise.
+	 */
+	uninstall(name) {
+		return new Promise((resolve, reject) => {
+			for (const slave of this.slaves) {
+				if (slave.name === name) {
+					npm.load(null, () => {
+						npm.commands.uninstall([name], (err) => {
+							if (err) {
+								return reject(err);
+							}
+							slave.installed = false;
+							slave.version = null;
+							jsSlaveManager.removeJSSlave(name);
+							resolve();
+						});
+					});
+					return;
+				}
+			}
+			reject(`${name} is not a valid slave`);
+		});
 	}
 }
 

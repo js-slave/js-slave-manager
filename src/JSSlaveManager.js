@@ -17,7 +17,23 @@ class JSSlaveManager {
 	 */
 	addJSSlave(name) {
 		const JSSlave = require(name);
-		this.jsSlaves.push(new JSSlave());
+		this.jsSlaves.push({
+			moduleName:			name,
+			jsslaveInstance:	new JSSlave()
+		});
+	}
+
+	/**
+	 * Remove an installed JSSlave.
+	 * @param  {String} name - The name of the JSSlave module.
+	 */
+	removeJSSlave(name) {
+		for (let i = 0; i < this.jsSlaves.length; ++i) {
+			if (this.jsSlaves[i].moduleName === name) {
+				this.jsSlaves.splice(i, 1);
+				return;
+			}
+		}
 	}
 
 	/**
@@ -29,7 +45,7 @@ class JSSlaveManager {
 	getAction(categoryId, actionId) {
 		for (let i = 0; i < this.jsSlaves.length; ++i) {
 			if (i === categoryId) {
-				const actions = this.jsSlaves[i].getActions();
+				const actions = this.jsSlaves[i].jsslaveInstance.getActions();
 				for (let j = 0; j < actions.length; ++j) {
 					if (j === actionId) {
 						return actions[j];
@@ -47,11 +63,11 @@ class JSSlaveManager {
 	getActions() {
 		const result = [];
 		for (let i = 0; i < this.jsSlaves.length; ++i) {
-			const actions = this.jsSlaves[i].getActions();
+			const actions = this.jsSlaves[i].jsslaveInstance.getActions();
 			if (actions.length > 0) {
 				const category = {
 					id: i,
-					categoryName: this.jsSlaves[i].getCategoryName(),
+					categoryName: this.jsSlaves[i].jsslaveInstance.getCategoryName(),
 					actions: []
 				};
 
@@ -79,7 +95,7 @@ class JSSlaveManager {
 	getEvent(categoryId, eventId) {
 		for (let i = 0; i < this.jsSlaves.length; ++i) {
 			if (i === categoryId) {
-				const events = this.jsSlaves[i].getEvents();
+				const events = this.jsSlaves[i].jsslaveInstance.getEvents();
 				for (let j = 0; j < events.length; ++j) {
 					if (j === eventId) {
 						return events[j];
@@ -97,11 +113,11 @@ class JSSlaveManager {
 	getEvents() {
 		const result = [];
 		for (let i = 0; i < this.jsSlaves.length; ++i) {
-			const events = this.jsSlaves[i].getEvents();
+			const events = this.jsSlaves[i].jsslaveInstance.getEvents();
 			if (events.length > 0) {
 				const category = {
 					id: i,
-					categoryName: this.jsSlaves[i].getCategoryName(),
+					categoryName: this.jsSlaves[i].jsslaveInstance.getCategoryName(),
 					events: []
 				};
 
