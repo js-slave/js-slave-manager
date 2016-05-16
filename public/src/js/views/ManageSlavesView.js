@@ -1,3 +1,5 @@
+import 'css-loading';
+
 import Backbone				from 'backbone';
 import ManageSlavesTemplate	from '../templates/manageSlaves.hbs';
 import SlavesCollection		from '../collections/SlavesCollection.js';
@@ -11,10 +13,34 @@ class ManageSlavesView extends Backbone.View {
 	 * Create an instance of ManageSlavesView
 	 */
 	constructor() {
-		super({});
+		super({
+			events: {
+				'click .button-install': 'install',
+				'click .button-uninstall': 'uninstall',
+				'click .button-upgrade': 'upgrade'
+			}
+		});
 		this.slavesCollection = new SlavesCollection();
 		this.slavesCollection.fetch().then(() => {
 			this.render();
+		});
+	}
+
+	/**
+	 * Called when the user click on the 'button-install'.
+	 * It will call the API to instal a new slave.
+	 *  @param {Object} e - Event informations
+	 */
+	install(e) {
+		const name = $(e.currentTarget).data('name');
+		$('.overlay').show();
+		$.post('/install', {name: name}).done(() => {
+			this.slavesCollection.fetch().then(() => {
+				this.render();
+			});
+		}).fail((error) => {
+			console.log(error);
+			$('.overlay').hide();
 		});
 	}
 
@@ -24,6 +50,6 @@ class ManageSlavesView extends Backbone.View {
 	render() {
 		this.$el.html(ManageSlavesTemplate(this.slavesCollection.toJSON()));
 	}
-}
+	}
 
 export default ManageSlavesView;

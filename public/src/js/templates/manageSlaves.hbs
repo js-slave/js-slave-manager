@@ -12,11 +12,11 @@
 
 				{{#if installed}}
 					{{#if newVersion}}
-						<button class="pure-button pure-button-primary button-success">Upgrade to {{latestVersion}}</button>
+						<button data-name="{{name}}" class="pure-button pure-button-primary button-success button-upgrade">Upgrade to {{latestVersion}}</button>
 					{{/if}}
-					<button class="pure-button pure-button-primary button-error">Uninstall</button>
+					<button data-name="{{name}}" class="pure-button pure-button-primary button-error button-uninstall">Uninstall</button>
 				{{else}}
-					<button class="pure-button pure-button-primary button-success">Install</button>
+					<button data-name="{{name}}" class="pure-button pure-button-primary button-success button-install">Install</button>
 				{{/if}}
 				<br><br>
 			</p>
@@ -31,5 +31,12 @@
 
 	<div class="center-txt div-button-back">
 		<a href="#/" class="button-xlarge pure-button pure-button-primary">Back</a>
+	</div>
+</div>
+
+<div class="overlay" style="display:none;">
+	<div style="margin-top: 10%;">
+		<p class="center-txt">Loading...</p>
+		<div class="center-div" data-loader="arrow-circle"></div>
 	</div>
 </div>
