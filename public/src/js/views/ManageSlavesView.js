@@ -27,14 +27,13 @@ class ManageSlavesView extends Backbone.View {
 	}
 
 	/**
-	 * Called when the user click on the 'button-install'.
-	 * It will call the API to instal a new slave.
-	 *  @param {Object} e - Event informations
+	 * Call the API with the POST method.
+	 * @param {String} url - The url of the API.
+	 * @param {Object} params - Parameters to send to the API.
 	 */
-	install(e) {
-		const name = $(e.currentTarget).data('name');
+	postApi(url, params) {
 		$('.overlay').show();
-		$.post('/install', {name: name}).done(() => {
+		$.post(url, params).done(() => {
 			this.slavesCollection.fetch().then(() => {
 				this.render();
 			});
@@ -42,6 +41,24 @@ class ManageSlavesView extends Backbone.View {
 			console.log(error);
 			$('.overlay').hide();
 		});
+	}
+
+	/**
+	 * Called when the user click on the 'button-install'.
+	 * It will call the API to install a new slave.
+	 *  @param {Object} e - Event informations
+	 */
+	install(e) {
+		this.postApi('/install', {name: $(e.currentTarget).data('name')});
+	}
+
+	/**
+	 * Called when the user click on the 'button-uninstall'.
+	 * It will call the API to uninstall a slave.
+	 *  @param {Object} e - Event informations
+	 */
+	uninstall(e) {
+		this.postApi('/uninstall', {name: $(e.currentTarget).data('name')});
 	}
 
 	/**
