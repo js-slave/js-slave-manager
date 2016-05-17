@@ -153,6 +153,34 @@ class AvailableSlaves {
 			reject(`${name} is not a valid slave`);
 		});
 	}
+
+	/**
+	 * Upgrade a slave
+	 * @param {String} name - The name of the slave.
+	 * @return {Promise} A Promise.
+	 */
+	upgrade(name) {
+		return new Promise((resolve, reject) => {
+			for (const slave of this.slaves) {
+				if (slave.name === name) {
+					npm.load(null, () => {
+						npm.commands.install([name], (err) => {
+							if (err) {
+								return reject(err);
+							}
+							slave.version = slave.latestVersion;
+							slave.newVersion = false;
+							slave.installed = true;
+							jsSlaveManager.addJSSlave(name);
+							resolve();
+						});
+					});
+					return;
+				}
+			}
+			reject(`${name} is not a valid slave`);
+		});
+	}
 }
 
 module.exports = new AvailableSlaves();

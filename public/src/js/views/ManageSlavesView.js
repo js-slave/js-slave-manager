@@ -62,6 +62,15 @@ class ManageSlavesView extends Backbone.View {
 	}
 
 	/**
+	 * Called when the user click on the 'button-upgrade'.
+	 * It will call the API to upgrade a slave.
+	 *  @param {Object} e - Event informations
+	 */
+	upgrade(e) {
+		this.postApi('/upgrade', {name: $(e.currentTarget).data('name')});
+	}
+
+	/**
 	 * Called when the page need to be rendered.
 	 */
 	render() {
