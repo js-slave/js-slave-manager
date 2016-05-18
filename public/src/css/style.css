@@ -15,6 +15,16 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 10px;
 }
 
+/**
+ * DEFAULT MARGIN/PADDING
+ */
+.margin-default {
+	margin: 10px;
+}
+
+.padding-default {
+	padding: 10px;
+}
 
 /**
  * CENTER
@@ -28,23 +38,29 @@ h1, h2, h3, h4, h5, h6 {
 	text-align: center;
 }
 
+.center-vertical {
+	transform: translateY(+50%);
+}
+
 
 /**
  * BUTTONS
  */
 
 .button-success {
-	background: rgb(28, 184, 65);
-	font-size: 150%;
+	background: rgb(28, 184, 65) !important;
 }
 
 .button-error {
-	background: rgb(202, 60, 60);
-	font-size: 150%;
+	background: rgb(202, 60, 60) !important;
 }
 
 .button-xlarge {
-	font-size: 125%;
+	font-size: 125% !important;
+}
+
+.button-xxlarge {
+	font-size: 150% !important;
 }
 
 .div-button-back {
@@ -76,7 +92,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #arrow-horizontal {
-	width: 100px;
 	height: 50px;
 	background-color: #3498db;
 	position: relative;
@@ -109,10 +124,8 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: 5px;
 	box-shadow: 0 0 0 1px rgba(34,36,38,.22) inset , 0 0 0 0 transparent;
 	background-color: #f8f8f8;
-	padding: 10px;
 	margin-bottom: 10px;
 }
-
 
 .overlay {
 	position: absolute;
