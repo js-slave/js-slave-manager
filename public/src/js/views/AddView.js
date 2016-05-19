@@ -35,10 +35,12 @@ class AddView extends Backbone.View {
 			action: this.action,
 			event: this.event
 		});
-		addModel.save().success((success) => {
-			console.log(success);
+		$('.overlay').show();
+		addModel.save().success(() => {
+			Backbone.history.navigate('', true);
 		}).error((error) => {
 			console.log(error);
+			$('.overlay').hide();
 		});
 	}
 

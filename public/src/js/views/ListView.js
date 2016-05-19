@@ -12,10 +12,33 @@ class ListView extends Backbone.View {
 	 * Call the API to get created slaves.
 	 */
 	constructor() {
-		super({});
+		super({
+			events: {
+				'click #button-delete': 'delete'
+			}
+		});
 		this.slavesRunnedCollection = new SlavesRunnedCollection();
 		this.slavesRunnedCollection.fetch().then(() => {
 			this.render();
+		});
+	}
+
+	/**
+	 * Call when the user click on delete button. The runned slave will be deleted in the server.
+	 * @param {Object} e - Event informations
+	 */
+	delete(e) {
+		const id = $(e.target).data('id');
+		$('.overlay').show();
+		$.ajax({
+			url: `/remove/${id}`, type: 'DELETE'
+		}).done(() => {
+			this.slavesRunnedCollection.fetch().then(() => {
+				this.render();
+			});
+		}).fail((error) => {
+			console.log(error);
+			$('.overlay').hide();
 		});
 	}
 
