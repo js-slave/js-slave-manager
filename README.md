@@ -19,11 +19,25 @@ All of the project is written in JavaScript ES6. For the back-end (API and Manag
 	npm install
 	npm start
 
+## Options
+
+The default port is 8080 but you can change it by 2 ways.
+
+1) By sending arguments to npm start:
+
+	npm start -- --port 8080
+
+2) By creating the file "config.json":
+
+ ```json
+{
+	"port": 8080
+}
+```
+
 ### Slave
 
-Each slave has to be installed with npm.
-
-	npm install js-slave-NAME
+You can install new slaves directly from the web interface.
 
 ### Contributing
 

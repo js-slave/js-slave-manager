@@ -1,10 +1,16 @@
 const availableSlaves	= require('./src/AvailableSlaves.js');
 const jsSlaveManager	= require('./src/JSSlaveManager.js');
+const nconf				= require('nconf');
 const npm				= require('npm');
-
 const restify			= require('restify');
 
-const port		= 8080;
+nconf.argv().file({ file: 'config.json' });
+
+nconf.defaults({
+	'port': 8080
+});
+
+const port		= nconf.get('port');
 const server	= restify.createServer({
 	name: 'js-slave-manager'
 });
